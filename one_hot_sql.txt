@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS data_eng.happiness_10;
+CREATE TABLE data_eng.happiness_10(
+	country VARCHAR,
+	happiness_rank INT,
+	happiness_score FLOAT,
+	whisker_high FLOAT,
+	whisker_low FLOAT,
+	economy_gdp_per_capita FLOAT,
+	family FLOAT,
+	health_life_expectancy FLOAT,
+	freedom FLOAT,
+	generosity FLOAT,
+	trust_government_corruption FLOAT,
+	dystopia_residual FLOAT
+);
+-- import world_happiness_2017_top10
+SELECT * FROM data_eng.happiness_10;
+SELECT
+	country,
+	CASE WHEN country = 'Norway' THEN 1 ELSE 0 END AS enc_Norway,
+	CASE WHEN country = 'Denmark' THEN 1 ELSE 0 END AS enc_Denmark,
+	CASE WHEN country = 'Iceland' THEN 1 ELSE 0 END AS enc_Iceland,
+	CASE WHEN country = 'Switzerland' THEN 1 ELSE 0 END AS enc_Switzerland,
+	CASE WHEN country = 'Finland' THEN 1 ELSE 0 END AS enc_Finland,
+	CASE WHEN country = 'Netherlands' THEN 1 ELSE 0 END AS enc_Netherlands,
+	CASE WHEN country = 'Canada' THEN 1 ELSE 0 END AS enc_Canada,
+	CASE WHEN country = 'New Zealand' THEN 1 ELSE 0 END AS enc_New_Zealand,
+	CASE WHEN country = 'Sweden' THEN 1 ELSE 0 END AS enc_Sweden,
+	CASE WHEN country = 'Australia' THEN 1 ELSE 0 END AS enc_Australia
+-- 	You can omit Australia because it's understood to be 0000000000
+FROM data_eng.happiness_10;
+
+

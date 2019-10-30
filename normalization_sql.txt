@@ -1,0 +1,4 @@
+SELECT country, dystopia_residual,
+(dystopia_residual - (SELECT AVG(dystopia_residual) FROM data_eng.happiness_10))  /
+(SELECT stddev_pop(dystopia_residual) FROM data_eng.happiness_10) AS scaled_dystopia_residual
+FROM data_eng.happiness_10;

@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS data_eng.woe;
+CREATE TABLE data_eng.woe(
+	age_group VARCHAR,
+	number_of_goods INT,
+	number_of_bads INT	
+);
+-- import woe_raw_sql.csv
+-- check
+SELECT * FROM data_eng.woe;
+SELECT *,
+	distribution_of_goods - distribution_of_bads * LN(distribution_of_goods / distribution_of_bads) AS cumulative_information_value,
+    100.0 * LN(distribution_of_goods / distribution_of_bads) AS woe					  
+	FROM(					  
+	SELECT *,
+		number_of_goods + number_of_bads AS total_n,
+		number_of_goods::FLOAT / (SELECT SUM(number_of_goods) FROM data_eng.woe) AS distribution_of_goods,
+		number_of_bads::FLOAT / (SELECT SUM(number_of_bads) FROM data_eng.woe) AS distribution_of_bads
+		FROM data_eng.woe) tbl1;					  
